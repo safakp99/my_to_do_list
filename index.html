@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>My To-Do List</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f2f4f3;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      padding: 20px;
+      background: white;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    input {
+      flex: 1;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px;
+      cursor: pointer;
+    }
+
+    ul {
+      padding: 0;
+      list-style: none;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+
+    .task-name {
+      flex: 1;
+    }
+
+    .done {
+      text-decoration: line-through;
+      color: gray;
+    }
+
+    @media (max-width: 400px) {
+      .input-row {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <h1>My To-Do List</h1>
+
+    <div class="input-row">
+      <input id="taskInput" type="text" placeholder="Write a task">
+      <button onclick="addTask()">Add</button>
+    </div>
+
+    <ul id="taskList"></ul>
+  </div>
+
+  <script>
+    function addTask() {
+      // Get the text typed into the input
+      const input = document.getElementById("taskInput");
+      const taskText = input.value.trim();
+
+      // Don't add an empty task
+      if (taskText === "") {
+        return;
+      }
+
+      // Create a list item for the new task
+      const listItem = document.createElement("li");
+
+      // Create a checkbox to mark the task as done
+      const checkbox = document.createElement("input");
+      checkbox.type = "checkbox";
+
+      // Create the task text
+      const taskName = document.createElement("span");
+      taskName.textContent = taskText;
+      taskName.className = "task-name";
+
+      // Cross out the task when its checkbox is clicked
+      checkbox.onclick = function() {
+        taskName.classList.toggle("done");
+      };
+
+      // Create a button to delete the task
+      const deleteButton = document.createElement("button");
+      deleteButton.textContent = "Delete";
+
+      deleteButton.onclick = function() {
+        listItem.remove();
+      };
+
+      // Put everything inside the list item
+      listItem.appendChild(checkbox);
+      listItem.appendChild(taskName);
+      listItem.appendChild(deleteButton);
+
+      // Add the task to the page
+      document.getElementById("taskList").appendChild(listItem);
+
+      // Clear the input
+      input.value = "";
+    }
+  </script>
+</body>
+</html>
